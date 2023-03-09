@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
-from stock_prediction.views import home_page
+from . import views
 
 urlpatterns = [
-    path('',home_page,name='home_page'),
+    path('', views.home_page, name='home'),
+    path('calendar/', views.calendar_page, name='calendar'),
 ]
