@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stock Ticker Input</title>
+  </head>
+  <body>
+    <h1>Enter a Stock Ticker:</h1>
+    <input type="text" id="tickerInput" />
+    <button type="button" onclick="displayTicker()">Submit</button>
+
+    <p id="tickerOutput"></p>
+
+    <script>
+      function displayTicker() {
+        const input = document.getElementById('tickerInput').value;
+        const output = document.getElementById('tickerOutput');
+        output.innerHTML = input.toUpperCase();
+      }
+    </script>
+  </body>
+</html>

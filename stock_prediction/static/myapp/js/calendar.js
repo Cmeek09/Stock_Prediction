@@ -3,6 +3,27 @@ const calendarEl = document.getElementById('calendar');
 const dateEl = document.getElementById('date');
 const noteEl = document.getElementById('note');
 const addNoteBtn = document.getElementById('add-note');
+const days = document.querySelectorAll('td[id^="day-"]');
+
+const today = new Date();
+
+
+// Update the day cells with the current date
+const currentDate = today.getDate();
+for (let i = 0; i < days.length; i++) {
+  const dayNum = i + 1;
+  if (dayNum === currentDate) {
+    days[i].classList.add('today');
+  } else {
+    days[i].classList.remove('today');
+  }
+  days[i].textContent = (dayNum <= daysInMonth(today)) ? dayNum : '';
+}
+
+// Helper function to get the number of days in a month
+function daysInMonth(date) {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+}
 
 // Add event listener to add note button
 addNoteBtn.addEventListener('click', () => {
@@ -14,7 +35,8 @@ const note = noteEl.value;
 const cell = calendarEl.querySelector(`td[data-date="${selectedDate}"]`);
 
 // Add note to cell
-cell.innerHTML += <p>${note}</p>;
+cell.innerHTML += `<p>${note}</p>`;
+
 
 // Clear form
 dateEl.value = '';
@@ -30,8 +52,8 @@ const startDay = firstDay.getDay();
 const endDay = lastDay.getDate();
 
 // Set month and year in calendar header
-const monthYearEl = calendarEl.querySelector('.month-year');
-monthYearEl.innerHTML = `${firstDay.toLocaleString('default', { month: 'long' })} ${year}`;
+const monthYearEl = calendarEl.querySelector('#month-year');
+monthYearEl.innerHTML = today.toLocaleString('default', { month: 'long', year: 'numeric' });
 
 // Populate calendar
 const calendarBodyEl = calendarEl.querySelector('tbody');
