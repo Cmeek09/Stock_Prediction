@@ -37,5 +37,20 @@ def income_statement(request, ticker):
     return JsonResponse(df.to_dict())
 
 
+def stock_prices(request, ticker):
+    api_key = 'K9OPGNS5IDET8VU5'
+    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={ticker}&apikey={api_key}'
+    r = requests.get(url)
+    data = r.json()['Time Series (Daily)']
+    dates = []
+    prices = []
+    for date, values in data.items():
+        dates.append(date)
+        prices.append(values['4. close'])
+    df = pd.DataFrame({'date': dates, 'price': prices})
+    df = df.set_index('date')
+    return JsonResponse(df.to_dict())
+
+
 def ticker_input(request):
     return render(request, 'gatherData.html')
