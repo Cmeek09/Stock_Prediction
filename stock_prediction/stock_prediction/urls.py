@@ -20,5 +20,7 @@ from . import views
 urlpatterns = [
     path('', views.home_page, name='home'),
     path('calendar/', views.calendar_page, name='calendar'),
-    path('gatherData/', views.getData_page, name='gatherData')
+    path('gatherData/', views.getData_page, name='gatherData'),
+    path('', views.ticker_input, name='ticker_input'),
+    path('income_statement/<str:ticker>', views.income_statement, name='income_statement'),
 ]

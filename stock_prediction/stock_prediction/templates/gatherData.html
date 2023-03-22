@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Stock Ticker Input</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
     <h1>Enter a Stock Ticker:</h1>
@@ -12,9 +13,15 @@
 
     <script>
       function displayTicker() {
-        const input = document.getElementById('tickerInput').value;
-        const output = document.getElementById('tickerOutput');
-        output.innerHTML = input.toUpperCase();
+        const ticker = document.getElementById('tickerInput').value.toUpperCase();
+        $.ajax({
+          url: `/income_statement/${ticker}`,
+          dataType: 'json',
+          success: function(data) {
+            const output = document.getElementById('tickerOutput');
+            output.innerHTML = JSON.stringify(data);
+          }
+        });
       }
     </script>
   </body>
