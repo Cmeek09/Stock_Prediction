@@ -23,4 +23,6 @@ urlpatterns = [
     path('gatherData/', views.getData_page, name='gatherData'),
     path('', views.ticker_input, name='ticker_input'),
     path('income_statement/<str:ticker>', views.income_statement, name='income_statement'),
+    path('stock_prices/<str:ticker>/', views.stock_prices, name='stock_prices'),
+
 ]

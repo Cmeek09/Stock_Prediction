@@ -7,34 +7,68 @@
   <body>
     <h1>Enter a Stock Ticker:</h1>
     <input type="text" id="tickerInput" />
-    <button type="button" onclick="displayTicker()">Submit</button>
+    <button type="button" onclick="displayIncomeStatement()">Get Income Statement</button>
+    <button type="button" onclick="displayStockPrices()">Get Historical Stock Prices</button>
 
-    <p id="tickerOutput"></p>
+    <p id="output"></p>
 
     <script>
-      function displayTicker() {
+      function displayIncomeStatement() {
         const ticker = document.getElementById('tickerInput').value.toUpperCase();
         $.ajax({
           url: `/income_statement/${ticker}`,
           dataType: 'json',
           success: function(data) {
-            const output = document.getElementById('tickerOutput');
-            let html = '<table><thead><tr><th>Fiscal Date Ending</th>';
-            for (const key in data) {
-              html += `<th>${key}</th>`;
-            }
-            html += '</tr></thead><tbody>';
-            for (const field in data[Object.keys(data)[0]]) {
-              html += `<tr><td>${field}</td>`;
-              for (const key in data) {
-                html += `<td>${data[key][field]}</td>`;
-              }
-              html += '</tr>';
-            }
-            html += '</tbody></table>';
-            output.innerHTML = html;
+            const output = document.getElementById('output');
+            const table = createTable(data);
+            output.innerHTML = '';
+            output.appendChild(table);
           }
         });
+      }
+
+      function displayStockPrices() {
+        const ticker = document.getElementById('tickerInput').value.toUpperCase();
+        $.ajax({
+          url: `/stock_prices/${ticker}`,
+          dataType: 'json',
+          success: function(data) {
+            const output = document.getElementById('output');
+            const table = createTable(data);
+            output.innerHTML = '';
+            output.appendChild(table);
+          }
+        });
+      }
+
+      function createTable(data) {
+        const table = document.createElement('table');
+        const thead = table.createTHead();
+        const tr = thead.insertRow(-1);
+        const headers = ['Fiscal Date Ending'];
+        for (const key in data) {
+          headers.push(key);
+        }
+        for (const header of headers) {
+          const th = document.createElement('th');
+          th.textContent = header;
+          tr.appendChild(th);
+        }
+        const tbody = table.createTBody();
+        const fields = Object.keys(data[Object.keys(data)[0]]);
+        for (const field of fields) {
+          const tr = tbody.insertRow(-1);
+          const td = document.createElement('td');
+          td.textContent = field;
+          tr.appendChild(td);
+          for (const key in data) {
+            const value = data[key][field];
+            const td = document.createElement('td');
+            td.textContent = value;
+            tr.appendChild(td);
+          }
+        }
+        return table;
       }      
     </script>
   </body>
