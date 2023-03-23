@@ -12,29 +12,33 @@
 
     <p id="output"></p>
 
-    <script>
-      function displayIncomeStatement() {
-        const ticker = document.getElementById('tickerInput').value.toUpperCase();
-        $.ajax({
-          url: `/income_statement/${ticker}`,
-          dataType: 'json',
-          success: function(data) {
-            const output = document.getElementById('output');
-            const table = createTable(data);
-            output.innerHTML = '';
-            output.appendChild(table);
-          }
-        });
-      }
+    <div id="stockPricesTable"></div>
+    <div id="incomeStatementTable"></div>
 
+
+    <script>
       function displayStockPrices() {
         const ticker = document.getElementById('tickerInput').value.toUpperCase();
         $.ajax({
           url: `/stock_prices/${ticker}`,
           dataType: 'json',
           success: function(data) {
-            const output = document.getElementById('output');
             const table = createTable(data);
+            const output = document.getElementById('stockPricesTable');
+            output.innerHTML = '';
+            output.appendChild(table);
+          }
+        });
+      }
+      
+      function displayIncomeStatement() {
+        const ticker = document.getElementById('tickerInput').value.toUpperCase();
+        $.ajax({
+          url: `/income_statement/${ticker}`,
+          dataType: 'json',
+          success: function(data) {
+            const table = createTable(data);
+            const output = document.getElementById('incomeStatementTable');
             output.innerHTML = '';
             output.appendChild(table);
           }
@@ -45,7 +49,7 @@
         const table = document.createElement('table');
         const thead = table.createTHead();
         const tr = thead.insertRow(-1);
-        const headers = ['Fiscal Date Ending'];
+        const headers = ['dateTime'];
         for (const key in data) {
           headers.push(key);
         }
