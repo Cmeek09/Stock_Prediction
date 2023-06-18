@@ -5,7 +5,7 @@
     --light-second: #c3c2c8;
     --light-hover: #f0f0f0;
     --light-text: #151426;
-    --light-btn: #9796f0;
+    --light-btn: #8785e4;
     --blue: #0000ff;
     --white: #fff;
     --shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -20,7 +20,7 @@
   body {
     place-items: center;
     font-family: var(--font-family);
-    background:linear-gradient(to right, #9796f0, #fbc7d4);
+    background:linear-gradient(to right, #131342, #000000);
     overflow: hidden;
   }
   .contianer {
@@ -38,7 +38,7 @@
   .calendar {
     height: 610px;
     width: max-content;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.185);
     border-radius: 25px;
     overflow: hidden;
     padding: 30px 50px 0px 50px;
