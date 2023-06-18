@@ -1,93 +1,155 @@
-// Get elements
-const calendarEl = document.getElementById('calendar');
-const dateEl = document.getElementById('date');
-const noteEl = document.getElementById('note');
-const addNoteBtn = document.getElementById('add-note');
-const days = document.querySelectorAll('td[id^="day-"]');
+const isLeapYear = (year) => {
+  return (
+    (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) ||
+    (year % 100 === 0 && year % 400 === 0)
+  );
+};
+const getFebDays = (year) => {
+  return isLeapYear(year) ? 29 : 28;
+};
+let calendar = document.querySelector('.calendar');
+const month_names = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+let month_picker = document.querySelector('#month-picker');
+const dayTextFormate = document.querySelector('.day-text-formate');
+const timeFormate = document.querySelector('.time-formate');
+const dateFormate = document.querySelector('.date-formate');
 
-const today = new Date();
+month_picker.onclick = () => {
+  month_list.classList.remove('hideonce');
+  month_list.classList.remove('hide');
+  month_list.classList.add('show');
+  dayTextFormate.classList.remove('showtime');
+  dayTextFormate.classList.add('hidetime');
+  timeFormate.classList.remove('showtime');
+  timeFormate.classList.add('hideTime');
+  dateFormate.classList.remove('showtime');
+  dateFormate.classList.add('hideTime');
+};
+
+const generateCalendar = (month, year) => {
+  let calendar_days = document.querySelector('.calendar-days');
+  calendar_days.innerHTML = '';
+  let calendar_header_year = document.querySelector('#year');
+  let days_of_month = [
+    31,
+    getFebDays(year),
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
+  
+  let currentDate = new Date();
+  
+  month_picker.innerHTML = month_names[month];
+  
+  calendar_header_year.innerHTML = year;
+  
+  let first_day = new Date(year, month);
 
 
-// Update the day cells with the current date
-const currentDate = today.getDate();
-for (let i = 0; i < days.length; i++) {
-  const dayNum = i + 1;
-  if (dayNum === currentDate) {
-    days[i].classList.add('today');
-  } else {
-    days[i].classList.remove('today');
+for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
+
+    let day = document.createElement('div');
+
+    if (i >= first_day.getDay()) {
+      day.innerHTML = i - first_day.getDay() + 1;
+
+      if (i - first_day.getDay() + 1 === currentDate.getDate() &&
+        year === currentDate.getFullYear() &&
+        month === currentDate.getMonth()
+      ) {
+        day.classList.add('current-date');
+      }
+    }
+    calendar_days.appendChild(day);
   }
-  days[i].textContent = (dayNum <= daysInMonth(today)) ? dayNum : '';
-}
+};
 
-// Helper function to get the number of days in a month
-function daysInMonth(date) {
-  return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-}
+let month_list = calendar.querySelector('.month-list');
+month_names.forEach((e, index) => {
+  let month = document.createElement('div');
+  month.innerHTML = `<div>${e}</div>`;
 
-// Add event listener to add note button
-addNoteBtn.addEventListener('click', () => {
-// Get selected date and note
-const selectedDate = dateEl.value;
-const note = noteEl.value;
-
-// Find corresponding table cell
-const cell = calendarEl.querySelector(`td[data-date="${selectedDate}"]`);
-
-// Add note to cell
-cell.innerHTML += `<p>${note}</p>`;
-
-
-// Clear form
-dateEl.value = '';
-noteEl.value = '';
+  month_list.append(month);
+  month.onclick = () => {
+    currentMonth.value = index;
+    generateCalendar(currentMonth.value, currentYear.value);
+    month_list.classList.replace('show', 'hide');
+    dayTextFormate.classList.remove('hideTime');
+    dayTextFormate.classList.add('showtime');
+    timeFormate.classList.remove('hideTime');
+    timeFormate.classList.add('showtime');
+    dateFormate.classList.remove('hideTime');
+    dateFormate.classList.add('showtime');
+  };
 });
 
-// Initialize calendar
-const month = 0; // January
-const year = 2023;
-const firstDay = new Date(year, month, 1);
-const lastDay = new Date(year, month + 1, 0);
-const startDay = firstDay.getDay();
-const endDay = lastDay.getDate();
+(function () {
+  month_list.classList.add('hideonce');
+})();
+document.querySelector('#pre-year').onclick = () => {
+  --currentYear.value;
+  generateCalendar(currentMonth.value, currentYear.value);
+};
+document.querySelector('#next-year').onclick = () => {
+  ++currentYear.value;
+  generateCalendar(currentMonth.value, currentYear.value);
+};
 
-// Set month and year in calendar header
-const monthYearEl = calendarEl.querySelector('#month-year');
-monthYearEl.innerHTML = today.toLocaleString('default', { month: 'long', year: 'numeric' });
+let currentDate = new Date();
+let currentMonth = { value: currentDate.getMonth() };
+let currentYear = { value: currentDate.getFullYear() };
+generateCalendar(currentMonth.value, currentYear.value);
 
-// Populate calendar
-const calendarBodyEl = calendarEl.querySelector('tbody');
-let date = 1;
-for (let i = 0; i < 6; i++) {
-const row = document.createElement('tr');
-for (let j = 0; j < 7; j++) {
-const cell = document.createElement('td');
-if (i === 0 && j < startDay) {
-// Empty cell before first day of month
-const cellText = document.createTextNode('');
-cell.appendChild(cellText);
-} else if (date > endDay) {
-// Empty cell after last day of month
-break;
-} else {
-// Cell with date
-const cellText = document.createTextNode(date);
-cell.appendChild(cellText);
-cell.dataset.date = `${year}-${month + 1}-${date < 10 ? '0' : ''}${date}`;
+const todayShowTime = document.querySelector('.time-formate');
+const todayShowDate = document.querySelector('.date-formate');
 
-  // Add note button
-  const addNoteBtn = document.createElement('button');
-  addNoteBtn.innerText = 'Add Note';
-  addNoteBtn.addEventListener('click', () => {
-    // Set date in add note form
-    dateEl.value = cell.dataset.date;
-  });
-  cell.appendChild(addNoteBtn);
-
-  date++;
-}
-row.appendChild(cell);
-
-}
-calendarBodyEl.appendChild(row);
-}
+const currshowDate = new Date();
+const showCurrentDateOption = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  weekday: 'long',
+};
+const currentDateFormate = new Intl.DateTimeFormat(
+  'en-US',
+  showCurrentDateOption
+).format(currshowDate);
+todayShowDate.textContent = currentDateFormate;
+setInterval(() => {
+  const timer = new Date();
+  const option = {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  };
+  const formateTimer = new Intl.DateTimeFormat('en-us', option).format(timer);
+  let time = `${`${timer.getHours()}`.padStart(
+    2,
+    '0'
+  )}:${`${timer.getMinutes()}`.padStart(
+    2,
+    '0'
+  )}: ${`${timer.getSeconds()}`.padStart(2, '0')}`;
+  todayShowTime.textContent = formateTimer;
+}, 1000);

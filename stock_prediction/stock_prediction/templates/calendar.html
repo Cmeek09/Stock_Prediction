@@ -1,93 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Calendar</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>calendar</title>
     {% load static %}
-    <script src="{% static 'D:\Programming\Projects\Stock_Prediction\stock_prediction\static\myapp\js\jquery.min.js' %}"></script>
-    <script src="{% static 'myapp/js/calendar.js' %}"></script>
+    <script src="{% static 'myapp/js/jquery.min.js' %}"></script>
+    <script src="{% static 'myapp/js/calendar.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'myapp/style/calendar.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="calendar">
+        <div class="calendar-header">
+          <span class="month-picker" id="month-picker">May</span>
+          <div class="year-picker" id="year-picker">
+            <span class="year-change" id="pre-year">
+              <pre>&lt;</pre>
+            </span>
+            <span id="year">2020</span>
+            <span class="year-change" id="next-year">
+              <pre>&gt;</pre>
+            </span>
+          </div>
+        </div>
 
-</head>
-<body>
-    <div id="calendar">
-        <table>
-          <caption id="month-year">monthYearEl</caption>
-          <thead>
-            <tr>
-              <th>Sun</th>
-              <th>Mon</th>
-              <th>Tue</th>
-              <th>Wed</th>
-              <th>Thu</th>
-              <th>Fri</th>
-              <th>Sat</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td id="day-1"></td>
-              <td id="day-2"></td>
-            </tr>
-            <tr>
-              <td id="day-3"></td>
-              <td id="day-4"></td>
-              <td id="day-5"></td>
-              <td id="day-6"></td>
-              <td id="day-7"></td>
-              <td id="day-8"></td>
-              <td id="day-9"></td>
-            </tr>
-            <tr>
-              <td id="day-10"></td>
-              <td id="day-11"></td>
-              <td id="day-12"></td>
-              <td id="day-13"></td>
-              <td id="day-14"></td>
-              <td id="day-15"></td>
-              <td id="day-16"></td>
-            </tr>
-            <tr>
-              <td id="day-17"></td>
-              <td id="day-18"></td>
-              <td id="day-19"></td>
-              <td id="day-20"></td>
-              <td id="day-21"></td>
-              <td id="day-22"></td>
-              <td id="day-23"></td>
-            </tr>
-            <tr>
-              <td id="day-24"></td>
-              <td id="day-25"></td>
-              <td id="day-26"></td>
-              <td id="day-27"></td>
-              <td id="day-28"></td>
-              <td id="day-29"></td>
-              <td id="day-30"></td>
-            </tr>
-            <tr>
-              <td id="day-31"></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <form>
-          <label for="date">Date:</label>
-          <input type="date" id="date" name="date">
-          <label for="note">Note:</label>
-          <input type="text" id="note" name="note">
-          <button type="button" id="add-note">Add Note</button>
-        </form>
+        <div class="calendar-body">
+          <div class="calendar-week-days">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+          <div class="calendar-days">
+          </div>
+        </div>
+        <div class="calendar-footer">
+        </div>
+        <div class="date-time-format">
+          <div class="day-text-format">TODAY</div>
+          <div class="date-time-value">
+            <div class="time-format">02:51:20</div>
+            <div class="date-format">23 - July - 2022</div>
+          </div>
+        </div>
+        <div class="month-list"></div>
       </div>
-
-      
-</body>
+    </div>
+  </body>
 </html>
