@@ -21,6 +21,7 @@ urlpatterns = [
     path('', views.home_page, name='home'),
     path('calendar/', views.calendar_page, name='calendar'),
     path('gatherData/', views.getData_page, name='gatherData'),
+    path('stockNewsAnalysis/', views.stocNews_page, name='stockNewsAnalysis'),
     path('', views.ticker_input, name='ticker_input'),
     path('income_statement/<str:ticker>', views.income_statement, name='income_statement'),
     path('stock_prices/<str:ticker>/', views.stock_prices, name='stock_prices'),

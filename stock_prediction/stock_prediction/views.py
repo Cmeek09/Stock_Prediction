@@ -13,6 +13,7 @@ def home_page(request):
         <ul>
             <li><a href="/calendar/">Calendar</a></li>
             <li><a href="/gatherData/">Pull stock features</a></li>
+            <li><a href="/stockNewsAnalysis/">Stock news analysis</a></li>
         </ul>
     ''')
 
@@ -25,6 +26,11 @@ def calendar_page(request):
 # gather data page
 def getData_page(request):
     return render(request, 'gatherData.html')
+
+
+# gather data page
+def stocNews_page(request):
+    return render(request, 'stockNewsAnalysis.html')
 
 
 def income_statement(request, ticker):
