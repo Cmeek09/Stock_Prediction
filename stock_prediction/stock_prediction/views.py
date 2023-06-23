@@ -28,7 +28,7 @@ def getData_page(request):
     return render(request, 'gatherData.html')
 
 
-# gather data page
+# stock's news data page
 def stocNews_page(request):
     return render(request, 'stockNewsAnalysis.html')
 
